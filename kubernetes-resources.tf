@@ -31,9 +31,6 @@ data "aws_caller_identity" "current" {}
 resource "kubernetes_namespace" "iomete-system" {
   metadata {
     name   = "iomete-system"
-    labels = {
-      "istio-injection" = "enabled"
-    }
   }
 }
 
@@ -49,8 +46,8 @@ resource "kubernetes_secret" "data-plane-secret" {
       region                = var.region,
       cluster_name          = var.cluster_name,
       storage_configuration = {
-        lakehouse_bucket_name = local.lakehouse_bucket_name,
-        assets_bucket_name    = local.assets_bucket_name,
+        lakehouse_bucket_name = var.lakehouse_bucket_name,
+        assets_bucket_name    = var.lakehouse_bucket_name,
         lakehouse_role_arn    = aws_iam_role.lakehouse_role.arn,
       },
       karpenter = {
@@ -132,42 +129,6 @@ resource "helm_release" "istio-gateway" {
     helm_release.istio-istiod
   ]
 }
-
-# =============== FluxCD Deployment ===============
-resource "kubernetes_namespace" "fluxcd" {
-  metadata {
-    name = "fluxcd"
-  }
-}
-
-resource "helm_release" "fluxcd" {
-  name       = "helm-operator"
-  namespace  = kubernetes_namespace.fluxcd.metadata.0.name
-  repository = "https://fluxcd-community.github.io/helm-charts"
-  version    = "2.7.0"
-  chart      = "flux2"
-
-  set {
-    name  = "imageReflectionController.create"
-    value = "false"
-  }
-
-  set {
-    name  = "imageAutomationController.create"
-    value = "false"
-  }
-
-  set {
-    name  = "kustomizeController.create"
-    value = "false"
-  }
-
-  set {
-    name  = "notificationController.create"
-    value = "false"
-  }
-}
-
 
 # =============== Karpenter Deployment ===============
 resource "kubernetes_namespace" "karpenter" {
