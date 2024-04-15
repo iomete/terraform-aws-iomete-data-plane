@@ -3,7 +3,6 @@ data "aws_availability_zones" "available" {}
 locals {
   vpc_cidr = "10.10.0.0/16"
   azs      = slice(data.aws_availability_zones.available.names, 0, (length(data.aws_availability_zones.available.names) <= 2 ? length(data.aws_availability_zones.available.names) : 3))
-  arns     = concat(var.additional_administrators, ["arn:aws:iam::680330367469:role/iomete-eks-operator"])
 }
 
 ################################################################################
@@ -118,7 +117,7 @@ module "eks" {
 
   aws_auth_users = concat([
 
-    for index, value in local.arns :
+    for index, value in var.additional_administrators :
     {
       userarn  = value
       username = split("/", value)[1]

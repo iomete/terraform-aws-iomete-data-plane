@@ -47,13 +47,7 @@ resource "kubernetes_secret" "data-plane-secret" {
       cluster_name          = var.cluster_name,
       storage_configuration = {
         lakehouse_bucket_name = var.lakehouse_bucket_name,
-        assets_bucket_name    = var.lakehouse_bucket_name,
         lakehouse_role_arn    = aws_iam_role.lakehouse_role.arn,
-      },
-      karpenter = {
-        irsa_arn         = module.karpenter.irsa_arn,
-        instance_profile = module.karpenter.instance_profile_name,
-        queue_name       = module.karpenter.queue_name,
       },
       eks = {
         name      = module.eks.cluster_name,
@@ -98,24 +92,6 @@ resource "helm_release" "istio-istiod" {
   chart      = "istiod"
   depends_on = [
     helm_release.istio-base
-  ]
-
-  values = [
-    yamlencode({
-      meshConfig = {
-        extensionProviders = [
-          {
-            name = "iomete-authz-service.iomete-system",
-            envoyExtAuthzHttp = {
-              service = "iom-core.iomete-system.svc.cluster.local",
-              port = 80,
-              includeRequestHeadersInCheck = ["connect-cluster", "user-id", "api-token"],
-              pathPrefix = "/api/v1/iam/connect/authz"
-            }
-          }
-        ]
-      }
-    })
   ]
 }
 
@@ -167,19 +143,4 @@ resource "helm_release" "karpenter" {
       replicas = 1
     })
   ]
-}
-
-# =============== IOMETE Deployment ===============
-
-resource "helm_release" "data-plane-base" {
-  name       = "data-plane-base"
-  namespace  = kubernetes_namespace.iomete-system.metadata.0.name
-  repository = "https://chartmuseum.iomete.com"
-  version    = local.data_plane_base_version
-  chart      = "iomete-data-plane-base"
-
-  set {
-    name  = "aws.lakehouseRoleArn"
-    value = aws_iam_role.lakehouse_role.arn
-  }
 }
