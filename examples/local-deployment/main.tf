@@ -1,6 +1,4 @@
-module "data-plane-aws" {
-  #  source  = "iomete/data-plane-aws/aws"
-  #  version = "2.2.0"
+module "iomete-data-plane" {
   source                    = "../.." # for local testing
 
   # AWS region where cluster will be created
@@ -19,5 +17,5 @@ module "data-plane-aws" {
 
 output "cluster_name" {
   description = "Kubernetes cluster name"
-  value       = module.data-plane-aws.cluster_name
+  value       = module.iomete-data-plane.cluster_name
 }

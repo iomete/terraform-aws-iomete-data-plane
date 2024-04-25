@@ -41,17 +41,17 @@ module "iomete-data-plane" {
 
 output "cluster_name" {
   description = "Kubernetes cluster name"
-  value       = module.data-plane-aws.cluster_name
+  value       = module.iomete-data-plane.cluster_name
 }
 
 output "cluster_endpoint" {
   description = "Endpoint for your Kubernetes API server"
-  value       = module.data-plane-aws.cluster_endpoint
+  value       = module.iomete-data-plane.cluster_endpoint
 }
 
 output "cluster_certificate_authority_data" {
   description = "Base64 encoded certificate data required to communicate cluster with the IOMETE controlplane"
-  value       = module.data-plane-aws.cluster_certificate_authority_data
+  value       = module.iomete-data-plane.cluster_certificate_authority_data
 }
 ```
 
@@ -61,7 +61,7 @@ Once you have the terraform file, and configured it according to your needs, you
 
 ```shell
 # Initialize Terraform
-terraform init --upgrade
+terraform init -upgrade
 
 # Create a plan to see what resources will be created
 terraform plan
