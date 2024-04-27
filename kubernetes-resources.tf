@@ -41,7 +41,7 @@ resource "kubernetes_secret" "data-plane-secret" {
   data = {
     "settings" = jsonencode({
       cloud                 = "aws",
-      region                = var.region,
+      region                = data.aws_region.current.name,
       cluster_name          = var.cluster_name,
       storage_configuration = {
         lakehouse_bucket_name = var.lakehouse_bucket_name,

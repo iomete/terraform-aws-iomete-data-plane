@@ -1,6 +1,4 @@
-provider "aws" {
-  region = var.region
-}
+data "aws_region" "current" {}
 
 locals {
   module_version        = "1.1.0"

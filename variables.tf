@@ -1,19 +1,13 @@
 # required inputs
-variable "region" {
-  description = "AWS region where cluster will be created"
+variable "cluster_name" {
   type        = string
+  description = "A unique cluster name for IOMETE. It should be unique withing compatible with AWS naming conventions."
 }
 
 variable "lakehouse_bucket_name" {
   description = "An empty S3 bucket name for IOMETE Lakehouse. Make sure the bucket is located in the same region as the cluster."
   type        = string
 }
-
-variable "cluster_name" {
-  type        = string
-  description = "A unique cluster name for IOMETE. It should be unique withing compatible with AWS naming conventions."
-}
-
 
 # optional inputs
 variable "eks_ng_instance_type" {

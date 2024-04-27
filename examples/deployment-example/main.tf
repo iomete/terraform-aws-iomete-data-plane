@@ -1,15 +1,17 @@
+provider "aws" {
+  # AWS region where cluster will be created
+  region = "us-east-1"
+}
+
 module "iomete-data-plane" {
   source                = "iomete/iomete-data-plane/aws"
   version               = "~> 1.9.0"
 
-  # AWS region where cluster will be created
-  region                    = "us-east-1"
-
-  # A bucket name for IOMETE lakehouse. It should be unique withing compatible with AWS naming conventions.
-  lakehouse_bucket_name     = "iom-test-lake"
-
   # Cluster name. EKS cluster and other resource names will be prefixed with this name.
   cluster_name              = "test-deployment"
+
+  # Create an S3 bucket in the same region as the EKS cluster and provide the name here.
+  lakehouse_bucket_name     = "iom-test-lake"
 }
 
 #################

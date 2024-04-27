@@ -1,3 +1,8 @@
+output "eks_update_kubeconfig_command" {
+  description = "Command to update kubeconfig for the EKS cluster"
+  value       = "aws eks update-kubeconfig --region ${data.aws_region.current.name} --name ${module.eks.cluster_name}"
+}
+
 output "cluster_arn" {
   description = "The Amazon Resource Name (ARN) of the cluster"
   value       = module.eks.cluster_arn

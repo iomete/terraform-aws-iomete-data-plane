@@ -24,14 +24,17 @@ Create a new folder and create a file (e.g. `iomete-terraform.tf`) with the foll
 
 
 ```hcl
+provider "aws" {
+  # AWS region where cluster will be created
+  region = "us-east-1"
+}
+
 module "iomete-data-plane" {
   source                = "iomete/iomete-data-plane/aws"
   version               = "~> 1.9.0"
-  # AWS region where cluster will be created
-  region                = "us-east-1"
   # Cluster name. EKS cluster and other resource names will be prefixed with this name.
   cluster_name          = "lakehouse-dev"
-  # A bucket name for IOMETE lakehouse. It should be unique withing compatible with AWS naming conventions.
+  # Create an S3 bucket in the same region as the EKS cluster and provide the name here.
   lakehouse_bucket_name = "lakehouse-dev"
 }
 
@@ -39,19 +42,8 @@ module "iomete-data-plane" {
 # Outputs 
 #################
 
-output "cluster_name" {
-  description = "Kubernetes cluster name"
-  value       = module.iomete-data-plane.cluster_name
-}
-
-output "cluster_endpoint" {
-  description = "Endpoint for your Kubernetes API server"
-  value       = module.iomete-data-plane.cluster_endpoint
-}
-
-output "cluster_certificate_authority_data" {
-  description = "Base64 encoded certificate data required to communicate cluster with the IOMETE controlplane"
-  value       = module.iomete-data-plane.cluster_certificate_authority_data
+output "eks_update_kubeconfig_command" {
+  value       = module.iomete-data-plane.eks_update_kubeconfig_command
 }
 ```
 
