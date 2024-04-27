@@ -9,6 +9,8 @@ module "iomete-data-plane" {
 
   # Cluster name. EKS cluster and other resource names will be prefixed with this name.
   cluster_name              = "test-deployment1"
+
+  cluster_administrators = [ "arn:aws:iam::680330367469:user/vusal", "arn:aws:iam::680330367469:user/fuad" ]
 }
 
 #################
