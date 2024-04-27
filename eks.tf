@@ -14,7 +14,7 @@ module "eks" {
   version                                      = "19.15.4"
   cluster_name                                 = var.cluster_name
   cluster_version                              = var.eks_cluster_version
-  kms_key_administrators                       = var.additional_administrators
+  kms_key_administrators                       = var.cluster_administrators
   vpc_id                                       = module.vpc.vpc_id
   subnet_ids                                   = module.vpc.private_subnets
   control_plane_subnet_ids                     = module.vpc.intra_subnets
@@ -117,7 +117,7 @@ module "eks" {
 
   aws_auth_users = concat([
 
-    for index, value in var.additional_administrators :
+    for index, value in var.cluster_administrators :
     {
       userarn  = value
       username = split("/", value)[1]

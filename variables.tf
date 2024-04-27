@@ -46,8 +46,8 @@ variable "kms_key_arn" {
   default     = "null"
 }
 
-variable "additional_administrators" {
-  description = "A list of IAM ARNs for administrating IOMETE infrastructure. If no value is provided, the current caller identity is used to ensure at least one key admin is available"
+variable "cluster_administrators" {
+  description = "A list of IAM ARNs to administer IOMETE infrastructure. By default, if no ARNs are provided, the current caller identity is automatically included to ensure that there is at least one administrator. If you choose to specify ARNs, it's recommended to include the caller identity as well to maintain access."
   type        = list(string)
   default     = []
 }
