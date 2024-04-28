@@ -4,6 +4,8 @@ This module creates a data-plane infrastructure for IOMETE on your AWS account.
 
 The module is open-source and available on GitHub: https://github.com/iomete/terraform-aws-iomete-data-plane
 
+Terraform Registry: https://registry.terraform.io/modules/iomete/iomete-data-plane/aws/latest
+
 
 ## Data plane installation
 
