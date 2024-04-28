@@ -18,7 +18,6 @@ module "iomete-data-plane" {
 # Outputs
 #################
 
-output "cluster_name" {
-  description = "Kubernetes cluster name"
-  value       = module.iomete-data-plane.cluster_name
+output "eks_update_kubeconfig_command" {
+  value       = module.iomete-data-plane.eks_update_kubeconfig_command
 }
