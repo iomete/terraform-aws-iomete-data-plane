@@ -8,5 +8,6 @@ locals {
     "iomete.com/cluster_name" : var.cluster_name
     "iomete.com/terraform" : true
     "iomete.com/managed" : true
+    "iomete.com/terraform_module_version" : local.module_version
   }
 }
