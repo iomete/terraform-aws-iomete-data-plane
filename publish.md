@@ -1,5 +1,7 @@
 # Publish new release
 
+https://registry.terraform.io/modules/iomete/iomete-data-plane/aws/latest
+
 Let's say the new version is `1.9.3`.
 
 ## Step 1: Update the version number
