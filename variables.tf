@@ -19,7 +19,7 @@ variable "eks_ng_instance_type" {
 variable "eks_cluster_version" {
   description = "EKS cluster version"
   type        = string
-  default     = "1.29"
+  default     = "1.30"
 }
 
 variable "volume_size" {
