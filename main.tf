@@ -1,7 +1,7 @@
 data "aws_region" "current" {}
 
 locals {
-  module_version        = "1.9.6"
+  module_version        = "1.9.7"
   lakehouse_role_name   = "${var.cluster_name}-lakehouse-role"
 
   tags = {
